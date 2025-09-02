@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Aloqa" %} - {{ site_config.site_name }}{% endblock %}
+{% block og_title %}{% trans "Aloqa" %} - {{ site_config.site_name }}{% endblock %}
+{% block og_description %}{% trans "Biz bilan bog'laning: telefon, email, manzil va aloqa formasi" %}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+<!-- Animate.css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<!-- AOS CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section hero-split position-relative overflow-hidden">
+    <!-- Bubbles (decor) -->
+    <div class="hero-bubbles" aria-hidden="true">
+        <span class="bubble b1"></span>
+        <span class="bubble b2"></span>
+        <span class="bubble b3"></span>
+        <span class="bubble b4"></span>
+        <span class="bubble b5"></span>
+        <span class="bubble b6"></span>
+        <span class="bubble b7"></span>
+        <span class="bubble b8"></span>
+    </div>
+    <div class="container position-relative">
+        <div class="hero-inner">
+            <!-- Left: content -->
+            <div class="content_flex">
+                <div class="hero-copy text-white animate__animated animate__fadeInLeft">
+                    <h1 class="fw-bold mb-3">{% trans "Aloqa" %}</h1>
+                    <p class="lead mb-4">{% trans "Biz bilan bog'lanish uchun forma va manzil" %}</p>
+                    <div class="d-flex flex-wrap context_text gap-3">
+                        <a href="{% url 'contact' %}" class="btn btn-light btn-lg">
+                            <i class="fas fa-phone me-2"></i> {% trans "Bog'lanish" %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: image area -->
+            <div class="hero-media animate__animated animate__fadeInRight">
+                <div class="hero-figure">
+                    <img
+                        class="hero-visual"
+                        src="{% static 'images/contact.png' %}"
+                        alt="{% trans 'Suv mahsuloti' %}"
+                        loading="eager"
+                    />
+                    <!-- Glow dekorlar -->
+                    <span class="glow g1"></span>
+                    <span class="glow g2"></span>
+                    <span class="glow g3"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Waves at bottom -->
+    <div class="hero-waves" aria-hidden="true">
+        <svg viewBox="0 0 120 28" preserveAspectRatio="none">
+            <defs>
+                <path id="wavePath" d="M0,16 C30,32 70,0 120,16 L120,32 L0,32 Z"/>
+            </defs>
+            <use href="#wavePath" class="wave wave1"/>
+            <use href="#wavePath" class="wave wave2"/>
+            <use href="#wavePath" class="wave wave3"/>
+        </svg>
+    </div>
+</section>
+
+<!-- Contact Info -->
+<section class="contact-info py-5">
+    <div class="container">
+        <div class="row g-4 justify-content-center">
+            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="100">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <div class="contact-icon mb-3">
+                            <i class="fas fa-map-marker-alt fa-2x text-primary"></i>
+                        </div>
+                        <h5 class="card-title fw-bold mb-3">{% trans "Manzil" %}</h5>
+                        <p class="card-text mb-0">{{ site_config.address|default:_("Manzil kiritilmagan") }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <div class="contact-icon mb-3">
+                            <i class="fas fa-phone-alt fa-2x text-primary"></i>
+                        </div>
+                        <h5 class="card-title fw-bold mb-3">{% trans "Telefon" %}</h5>
+                        {% if site_config.phone %}
+                            <p class="card-text mb-0">
+                                <a href="tel:{{ site_config.phone }}" class="text-decoration-none text-dark">
+                                    {{ site_config.phone }}
+                                </a>
+                            </p>
+                        {% else %}
+                            <p class="card-text mb-0">{% trans "Telefon raqam kiritilmagan" %}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6" data-aos="zoom-in" data-aos-delay="300">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <div class="contact-icon mb-3">
+                            <i class="fas fa-envelope fa-2x text-primary"></i>
+                        </div>
+                        <h5 class="card-title fw-bold mb-3">{% trans "Email" %}</h5>
+                        {% if site_config.email %}
+                            <p class="card-text mb-0">
+                                <a href="mailto:{{ site_config.email }}" class="text-decoration-none text-dark">
+                                    {{ site_config.email }}
+                                </a>
+                            </p>
+                        {% else %}
+                            <p class="card-text mb-0">{% trans "Email kiritilmagan" %}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form -->
+<section class="contact-form py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8" data-aos="fade-up" data-aos-delay="100">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white py-3">
+                        <h4 class="card-title mb-0 fw-bold text-center">{% trans "Bizga xabar jo'natish" %}</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        <form method="post" class="animate__animated animate__fadeInUp">
+                            {% csrf_token %}
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="name" class="form-label fw-bold">{% trans "Ismingiz" %}</label>
+                                    <input type="text" name="name" id="name" class="form-control" placeholder="{% trans 'Ismingiz' %}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label fw-bold">{% trans "Telefon raqamingiz" %}</label>
+                                    <input type="tel" name="phone" id="phone" class="form-control" placeholder="+998 90 123 45 67" required>
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="email" class="form-label fw-bold">{% trans "Email manzilingiz (ixtiyoriy)" %}</label>
+                                    <input type="email" name="email" id="email" class="form-control" placeholder="example@email.com">
+                                </div>
+                                <div class="col-12">
+                                    <label for="message" class="form-label fw-bold">{% trans "Xabar matni" %}</label>
+                                    <textarea name="message" id="message" class="form-control" rows="5" placeholder="{% trans 'Xabaringizni yozing...' %}" required></textarea>
+                                </div>
+                                <div class="col-12 text-center mt-3">
+                                    <button type="submit" class="btn btn-primary btn-lg px-4 animate__animated animate__pulse animate__infinite">
+                                        <i class="fas fa-paper-plane me-2"></i> {% trans "Xabarni jo'natish" %}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Google Maps Section -->
+<section class="maps-section py-5" id="mapSection">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12" data-aos="fade-up">
+                <h2 class="display-6 fw-bold mb-3">{% trans "Bizning joylashuvimiz" %}</h2>
+                <p class="lead text-muted">{% trans "Ofisimizga tashrif buyuring yoki xaritadan yo'nalishni oling" %}</p>
+            </div>
+        </div>
+        <div class="map-container" data-aos="fade-up" data-aos-delay="200">
+            {% if site_config.google_maps_embed %}
+                <div class="map-wrapper animate__animated animate__zoomIn">
+                    {{ site_config.google_maps_embed|safe }}
+                    <div class="map-overlay">
+                        <div class="map-info">
+                            <h5 class="fw-bold mb-2">TozaSuv {% trans "Ofisi" %}</h5>
+                            <p class="mb-2">{{ site_config.address }}</p>
+                            <div class="map-actions">
+                                <a href="https://maps.google.com/maps?q={{ site_config.address }}"
+                                   class="btn btn-primary btn-sm" target="_blank">
+                                    <i class="fas fa-directions me-1"></i> {% trans "Yo'nalish olish" %}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="map-placeholder">
+                    <div class="placeholder-content">
+                        <i class="fas fa-map fa-3x text-muted mb-3"></i>
+                        <h5 class="text-muted">{% trans "Xarita yuklanmoqda..." %}</h5>
+                        <p class="text-muted">{% trans "Iltimos, biroz kuting" %}</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12" data-aos="fade-up">
+                <h2 class="display-6 fw-bold mb-3">{% trans "Tez-tez so'raladigan savollar" %}</h2>
+                <p class="lead text-muted">{% trans "Eng ko'p so'raladigan savollar va javoblar" %}</p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                {% if faqs %}
+                <div class="accordion" id="contactFAQ" data-aos="fade-up" data-aos-delay="200">
+                    {% for faq in faqs %}
+                    <div class="accordion-item animate__animated animate__fadeInUp">
+                        <h2 class="accordion-header" id="faq{{ forloop.counter }}">
+                            <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}"
+                                    type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapse{{ forloop.counter }}"
+                                    aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+                                    aria-controls="collapse{{ forloop.counter }}">
+                                <i class="fas fa-question-circle me-2"></i>
+                                {{ faq.question }}
+                            </button>
+                        </h2>
+                        <div id="collapse{{ forloop.counter }}"
+                             class="accordion-collapse collapse {% if forloop.first %}show{% endif %}"
+                             data-bs-parent="#contactFAQ"
+                             aria-labelledby="faq{{ forloop.counter }}">
+                            <div class="accordion-body">
+                                {{ faq.answer|linebreaks }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<!-- AOS JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,
+    once: true,
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ page_title }} - {{ site_config.site_name }}{% endblock %}</title>
+
+    <!-- Meta tags -->
+    <meta name="description" content="{% block meta_description %}{{ meta_description|default:'TozaSuv - sifatli ichimlik suvi' }}{% endblock %}">
+    <meta name="keywords" content="toza suv, ichimlik suvi, mineral suv, O'zbekiston">
+    <meta name="author" content="Toza Suv">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="{% block og_title %}{{ page_title }} - {{ site_config.site_name }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ meta_description }}{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{% static 'waterApp/images/og-image.jpg' %}{% endblock %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- AOS (Animate On Scroll) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    <!-- Fasllar animatsiyasi CSS -->
+    <style>
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+    </style>
+
+    <meta name="csrf-token" content="{% csrf_token %}">
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+
+    <!-- Header -->
+    {% include 'includes/header.html' %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    {% include 'includes/footer.html' %}
+
+    <!-- Order Modal -->
+    {% include 'includes/order_modal.html' %}
+
+    <!-- Back to Top -->
+    <button id="backToTop" class="btn btn-primary btn-floating">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+    <!-- Main JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Preloader
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                    }, 500);
+                }, 1500);
+            }
+
+            // AOS Initialize
+            AOS.init({
+                duration: 1000,
+                once: true,
+                offset: 100
+            });
+
+            // Back to Top Button
+            const backToTopBtn = document.getElementById('backToTop');
+            if (backToTopBtn) {
+                window.addEventListener('scroll', function() {
+                    if (window.pageYOffset > 300) {
+                        backToTopBtn.classList.add('show');
+                    } else {
+                        backToTopBtn.classList.remove('show');
+                    }
+                });
+
+                backToTopBtn.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+
+            // Order button handlers
+            const orderButtons = document.querySelectorAll('.order-btn');
+            orderButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    const productName = this.getAttribute('data-product-name');
+                    const productPrice = this.getAttribute('data-product-price');
+
+                    // Order modal ochish (modal mavjud bo'lsa)
+                    const orderModal = document.getElementById('orderModal');
+                    if (orderModal) {
+                        const modal = new bootstrap.Modal(orderModal);
+                        modal.show();
+
+                        // Product ma'lumotlarini modalga set qilish
+                        const productInput = orderModal.querySelector('#product_id');
+                        if (productInput) productInput.value = productId;
+
+                        const productNameDisplay = orderModal.querySelector('#selected_product_name');
+                        if (productNameDisplay) productNameDisplay.textContent = productName;
+
+                        const priceDisplay = orderModal.querySelector('#selected_product_price');
+                        if (priceDisplay) priceDisplay.textContent = productPrice + ' so\'m';
+                    }
+                });
+            });
+
+            // ===== Fasllar animatsiyasi =====
+            function getCurrentSeason() {
+                let month = new Date().getMonth() + 1; // 1–12
+                if ([12,1,2].includes(month)) return "qish";
+                if ([3,4,5].includes(month)) return "bahor";
+                if ([6,7,8].includes(month)) return "yoz";
+                if ([9,10,11].includes(month)) return "kuz";
+            }
+
+            function yaratParticle(fasl) {
+                let particle = document.createElement("div");
+                particle.classList.add("particle");
+                document.body.appendChild(particle);
+
+                let size = Math.random() * 10 + 5;
+                particle.style.width = size + "px";
+                particle.style.height = size + "px";
+                particle.style.left = Math.random() * window.innerWidth + "px";
+                particle.style.top = "-20px";
+
+                let sahifaUzunligi = document.documentElement.scrollHeight;
+
+                if (fasl === "qish") {
+                    particle.style.background = "white";
+                    particle.style.opacity = Math.random();
+                    particle.animate([
+                        { transform: "translateY(0)" },
+                        { transform: `translateY(${sahifaUzunligi}px) translateX(${Math.random() * 100 - 50}px)` }
+                    ], {
+                        duration: 10000 + Math.random() * 5000, // 10–15s
+                        iterations: 1,
+                    }).onfinish = () => particle.remove();
+                }
+
+                if (fasl === "bahor") {
+                    particle.innerHTML = "🌸";
+                    particle.style.fontSize = size + "px";
+                    particle.animate([
+                        { transform: "translateY(0)" },
+                        { transform: `translateY(${sahifaUzunligi}px) translateX(${Math.random() * 200 - 100}px)` }
+                    ], {
+                        duration: 9000 + Math.random() * 6000, // 9–15s
+                        iterations: 1,
+                    }).onfinish = () => particle.remove();
+                }
+
+                if (fasl === "yoz") {
+                    particle.style.background = "rgba(255,255,255,0.7)";
+                    particle.style.borderRadius = "50%";
+                    particle.animate([
+                        { transform: "translateY(0)" },
+                        { transform: `translateY(${sahifaUzunligi}px)` }
+                    ], {
+                        duration: 8000 + Math.random() * 5000, // 8–13s
+                        iterations: 1,
+                    }).onfinish = () => particle.remove();
+                }
+
+                if (fasl === "kuz") {
+                    particle.innerHTML = "🍂";
+                    particle.style.fontSize = size + "px";
+                    particle.animate([
+                        { transform: "translateY(0)" },
+                        { transform: `translateY(${sahifaUzunligi}px) translateX(${Math.random() * 200 - 100}px) rotate(${Math.random() * 360}deg)` }
+                    ], {
+                        duration: 12000 + Math.random() * 6000, // 12–18s
+                        iterations: 1,
+                    }).onfinish = () => particle.remove();
+                }
+            }
+
+            function boshlabYubor() {
+                let fasl = getCurrentSeason();
+                document.body.className = fasl;
+                setInterval(() => yaratParticle(fasl), 400); // har 0.4s da bitta
+            }
+
+            boshlabYubor();
+        });
+    </script>
+
+    {% block extra_js %}{% endblock %}
+{% csrf_token %}
+</body>
+</html>

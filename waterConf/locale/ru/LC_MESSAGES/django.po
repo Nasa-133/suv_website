@@ -1,0 +1,615 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-26 12:06+0500\n"
+"PO-Revision-Date: 2025-08-19 12:00+0000\n"
+"Last-Translator: Behruz Xazratov <xazratovbehroz@gmail.com>\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: waterApp/templates/about.html:13 waterApp/templates/about.html:27
+#: waterApp/templates/includes/footer.html:56
+#: waterApp/templates/includes/header.html:29
+msgid "Biz haqimizda"
+msgstr "О нас"
+
+#: waterApp/templates/about.html:14
+msgid "TozaSuv – sog'lom turmush tarzi asosi"
+msgstr "TozaSuv – основа здорового образа жизни"
+
+#: waterApp/templates/about.html:38 waterApp/templates/home.html:249
+msgid "ISO sertifikatli"
+msgstr "Сертифицировано ISO"
+
+#: waterApp/templates/about.html:44
+#, fuzzy, python-format
+#| msgid "100%% tabiy suv"
+msgid "100%% tabiy suv"
+msgstr "100% натуральная вода"
+
+#: waterApp/templates/about.html:50 waterApp/templates/home.html:261
+msgid "Laboratoriya nazorati"
+msgstr "Лабораторный контроль"
+
+#: waterApp/templates/about.html:56 waterApp/templates/home.html:267
+msgid "Bepul yetkazib berish"
+msgstr "Бесплатная доставка"
+
+#: waterApp/templates/about.html:72
+msgid "Bizning maqsadimiz va istiqbolimiz"
+msgstr "Наша цель и перспективы"
+
+#: waterApp/templates/about.html:73
+msgid "TozaSuv bilan kelajakda nima qilmoqchi ekanmiz"
+msgstr "Что мы хотим сделать с TozaSuv в будущем"
+
+#: waterApp/templates/about.html:80
+msgid "Maqsad"
+msgstr "Цель"
+
+#: waterApp/templates/about.html:88
+msgid "Istiqbol"
+msgstr "Перспектива"
+
+#: waterApp/templates/about.html:103
+msgid "Bizning afzalliklarimiz"
+msgstr "Наши преимущества"
+
+#: waterApp/templates/about.html:104
+msgid "Sifat, tezlik va ishonchlilik"
+msgstr "Качество, скорость и надежность"
+
+#: waterApp/templates/about.html:113 waterApp/templates/home.html:142
+#: waterApp/templates/includes/footer.html:100
+msgid "Sifat kafolati"
+msgstr "Гарантия качества"
+
+#: waterApp/templates/about.html:114 waterApp/templates/home.html:143
+msgid "7 bosqichli tozalash tizimi va xalqaro sertifikatlar"
+msgstr "7-ступенчатая система очистки и международные сертификаты"
+
+#: waterApp/templates/about.html:122
+msgid "Tez yetkazish"
+msgstr "Быстрая доставка"
+
+#: waterApp/templates/about.html:123 waterApp/templates/home.html:152
+msgid "Toshkent bo'ylab 2-4 soat ichida bepul yetkazib berish"
+msgstr "Бесплатная доставка по Ташкенту в течение 2–4 часов"
+
+#: waterApp/templates/about.html:131 waterApp/templates/home.html:160
+msgid "Ekologik toza"
+msgstr "Экологически чисто"
+
+#: waterApp/templates/about.html:132 waterApp/templates/home.html:161
+#, python-format
+msgid "100%% qayta ishlanuvchi qadoqlash materiallari"
+msgstr "100%% перерабатываемые упаковочные материалы"
+
+#: waterApp/templates/about.html:177 waterApp/templates/home.html:286
+msgid "Mijozlarimiz fikri"
+msgstr "Отзывы наших клиентов"
+
+#: waterApp/templates/about.html:178 waterApp/templates/home.html:287
+msgid "Bizni tanlaganlar nima deydi"
+msgstr "Что говорят те, кто выбрал нас"
+
+#: waterApp/templates/about.html:216 waterApp/templates/home.html:327
+msgid "Barcha sharhlarni ko'rish"
+msgstr "Посмотреть все отзывы"
+
+#: waterApp/templates/about.html:229 waterApp/templates/home.html:340
+msgid "Bizning hamkorlarimiz"
+msgstr "Наши партнёры"
+
+#: waterApp/templates/about.html:230 waterApp/templates/home.html:341
+msgid "Ishonchli brendlar biz bilan hamkorlik qiladi"
+msgstr "Надёжные бренды сотрудничают с нами"
+
+#: waterApp/templates/about.html:253
+msgid "TozaSuv bilan tanishing!"
+msgstr "Познакомьтесь с TozaSuv!"
+
+#: waterApp/templates/about.html:254 waterApp/templates/home.html:412
+msgid ""
+"Sog'lom turmush tarzi TozaSuv bilan boshlanadi. Hoziroq buyurtma bering va "
+"toza suvning ta'mini his eting."
+msgstr ""
+"Здоровый образ жизни начинается с TozaSuv. Закажите прямо сейчас и ощутите "
+"вкус чистой воды."
+
+#: waterApp/templates/about.html:257 waterApp/templates/home.html:55
+#: waterApp/templates/home.html:207 waterApp/templates/home.html:416
+#: waterApp/templates/includes/order_modal.html:8
+#: waterApp/templates/includes/order_modal.html:126
+#: waterApp/templates/products.html:111 waterApp/templates/products.html:176
+msgid "Buyurtma berish"
+msgstr "Сделать заказ"
+
+#: waterApp/templates/about.html:260 waterApp/templates/home.html:419
+msgid "Bog'lanish"
+msgstr "Связаться"
+
+#: waterApp/templates/contact.html:5 waterApp/templates/contact.html:6
+#: waterApp/templates/contact.html:13
+#: waterApp/templates/includes/footer.html:59
+#: waterApp/templates/includes/header.html:57
+msgid "Aloqa"
+msgstr "Контакты"
+
+#: waterApp/templates/contact.html:7
+msgid "Biz bilan bog'laning: telefon, email, manzil va aloqa formasi"
+msgstr "Свяжитесь с нами: телефон, email, адрес и контактная форма"
+
+#: waterApp/templates/contact.html:14
+msgid "Biz bilan bog'lanish uchun forma va manzil"
+msgstr "Форма для связи с нами и адрес"
+
+#: waterApp/templates/contact.html:28
+msgid "Manzil"
+msgstr "Адрес"
+
+#: waterApp/templates/contact.html:29
+msgid "Manzil kiritilmagan"
+msgstr "Адрес не указан"
+
+#: waterApp/templates/contact.html:39
+#: waterApp/templates/includes/order_modal.html:22
+msgid "Telefon"
+msgstr "Телефон"
+
+#: waterApp/templates/contact.html:47
+msgid "Telefon raqam kiritilmagan"
+msgstr "Номер телефона не указан"
+
+#: waterApp/templates/contact.html:58
+msgid "Email"
+msgstr "Email"
+
+#: waterApp/templates/contact.html:66
+msgid "Email kiritilmagan"
+msgstr "Email не указан"
+
+#: waterApp/templates/contact.html:82
+msgid "Bizga xabar jo'natish"
+msgstr "Отправить нам сообщение"
+
+#: waterApp/templates/contact.html:98 waterApp/templates/contact.html:99
+msgid "Ismingiz"
+msgstr "Ваше имя"
+
+#: waterApp/templates/contact.html:102
+msgid "Telefon raqamingiz"
+msgstr "Ваш номер телефона"
+
+#: waterApp/templates/contact.html:106
+msgid "Email manzilingiz (ixtiyoriy)"
+msgstr "Ваш email адрес (необязательно)"
+
+#: waterApp/templates/contact.html:110
+msgid "Xabar matni"
+msgstr "Текст сообщения"
+
+#: waterApp/templates/contact.html:111
+msgid "Xabaringizni yozing..."
+msgstr "Напишите ваше сообщение..."
+
+#: waterApp/templates/contact.html:115
+msgid "Xabarni jo'natish"
+msgstr "Отправить сообщение"
+
+#: waterApp/templates/contact.html:132
+msgid "Bizning joylashuvimiz"
+msgstr "Наше местоположение"
+
+#: waterApp/templates/contact.html:133
+msgid "Ofisimizga tashrif buyuring yoki xaritadan yo'nalishni oling"
+msgstr "Посетите наш офис или получите направление по карте"
+
+#: waterApp/templates/contact.html:144
+msgid "Ofisi"
+msgstr "Офис"
+
+#: waterApp/templates/contact.html:149
+msgid "Yo'nalish olish"
+msgstr "Получить направление"
+
+#: waterApp/templates/contact.html:159
+msgid "Xarita yuklanmoqda..."
+msgstr "Загрузка карты..."
+
+#: waterApp/templates/contact.html:160
+msgid "Iltimos, biroz kuting"
+msgstr "Пожалуйста, подождите"
+
+#: waterApp/templates/contact.html:173
+msgid "Tez-tez so'raladigan savollar"
+msgstr "Часто задаваемые вопросы"
+
+#: waterApp/templates/contact.html:174
+msgid "Eng ko'p so'raladigan savollar va javoblar"
+msgstr "Самые часто задаваемые вопросы и ответы"
+
+#: waterApp/templates/home.html:25
+msgid "Banner"
+msgstr "Баннер"
+
+#: waterApp/templates/home.html:68
+msgid "TozaSuv"
+msgstr "TozaSuv"
+
+#: waterApp/templates/home.html:100
+msgid "Oldingi"
+msgstr "Предыдущий"
+
+#: waterApp/templates/home.html:106
+msgid "Keyingi"
+msgstr "Следующий"
+
+#: waterApp/templates/home.html:132
+msgid "Nima uchun TozaSuv?"
+msgstr "Почему TozaSuv?"
+
+#: waterApp/templates/home.html:133
+msgid "Bizning afzalliklarimiz va kafolatlarimiz"
+msgstr "Наши преимущества и гарантии"
+
+#: waterApp/templates/home.html:151
+msgid "Tez yetkazib berish"
+msgstr "Быстрая доставка"
+
+#: waterApp/templates/home.html:173
+msgid "Bizning mahsulotlar"
+msgstr "Наши продукты"
+
+#: waterApp/templates/home.html:174 waterApp/templates/products.html:14
+msgid "Har bir ehtiyoj uchun ideal tanlov"
+msgstr "Идеальный выбор для любой потребности"
+
+#: waterApp/templates/home.html:197 waterApp/templates/home.html:199
+#: waterApp/templates/includes/order_modal.html:105
+#: waterApp/templates/includes/order_modal.html:115
+#: waterApp/templates/products.html:102 waterApp/templates/products.html:104
+msgid "so'm"
+msgstr "сум"
+
+#: waterApp/templates/home.html:215
+msgid "Hozircha mahsulotlar mavjud emas."
+msgstr "В данный момент продукты отсутствуют."
+
+#: waterApp/templates/home.html:223
+msgid "Barcha mahsulotlarni ko'rish"
+msgstr "Посмотреть все продукты"
+
+#: waterApp/templates/home.html:255
+#, python-format
+msgid "100%% tabiiy"
+msgstr "100%% натуральный"
+
+#: waterApp/templates/home.html:272
+msgid "Batafsil ma'lumot"
+msgstr "Подробнее"
+
+#: waterApp/templates/home.html:368
+msgid "So'nggi yangiliklar"
+msgstr "Последние новости"
+
+#: waterApp/templates/home.html:369
+msgid "Kompaniya faoliyati va aksiyalar haqida"
+msgstr "О деятельности компании и акциях"
+
+#: waterApp/templates/home.html:381 waterApp/templates/news.html:51
+msgid "Aksiya"
+msgstr "Акция"
+
+#: waterApp/templates/home.html:388 waterApp/templates/news.html:58
+msgid "O'qish"
+msgstr "Читать"
+
+#: waterApp/templates/home.html:398 waterApp/templates/news.html:24
+#: waterApp/templates/news.html:70
+msgid "Barcha yangiliklar"
+msgstr "Все новости"
+
+#: waterApp/templates/home.html:410
+msgid "Bugun TozaSuv bilan tanishing!"
+msgstr "Познакомьтесь с TozaSuv сегодня!"
+
+#: waterApp/templates/includes/footer.html:31
+msgid ""
+"Tabiatning eng toza sovg'asi - tog' buloqlaridan sizning stolingingizgacha. "
+"Har tomchida sog'lik va sof tabiat."
+msgstr ""
+"Самый чистый дар природы - от горных родников до вашего стола. В каждой "
+"капле здоровье и чистая природа."
+
+#: waterApp/templates/includes/footer.html:35
+msgid "Facebook"
+msgstr "Facebook"
+
+#: waterApp/templates/includes/footer.html:40
+msgid "Instagram"
+msgstr "Instagram"
+
+#: waterApp/templates/includes/footer.html:45
+msgid "Telegram"
+msgstr "Telegram"
+
+#: waterApp/templates/includes/footer.html:53
+msgid "Sahifalar"
+msgstr "Страницы"
+
+#: waterApp/templates/includes/footer.html:55
+#: waterApp/templates/includes/header.html:23
+msgid "Bosh sahifa"
+msgstr "Главная"
+
+#: waterApp/templates/includes/footer.html:57
+#: waterApp/templates/includes/header.html:35 waterApp/templates/news.html:128
+#: waterApp/templates/products.html:13 waterApp/templates/products.html:23
+msgid "Mahsulotlar"
+msgstr "Продукты"
+
+#: waterApp/templates/includes/footer.html:58
+#: waterApp/templates/includes/header.html:51 waterApp/templates/news.html:27
+msgid "Yangiliklar"
+msgstr "Новости"
+
+#: waterApp/templates/includes/footer.html:64
+msgid "Aloqa ma'lumotlari"
+msgstr "Контактная информация"
+
+#: waterApp/templates/includes/footer.html:94
+msgid "Bizning xizmatlar"
+msgstr "Наши услуги"
+
+#: waterApp/templates/includes/footer.html:96
+msgid "Uyga yetkazib berish"
+msgstr "Доставка на дом"
+
+#: waterApp/templates/includes/footer.html:97
+msgid "Optom savdo"
+msgstr "Оптовая продажа"
+
+#: waterApp/templates/includes/footer.html:98
+msgid "Korxonalar uchun"
+msgstr "Для предприятий"
+
+#: waterApp/templates/includes/footer.html:99
+msgid "24/7 qo'llab-quvvatlash"
+msgstr "Поддержка 24/7"
+
+#: waterApp/templates/includes/footer.html:110
+msgid "Barcha huquqlar himoyalangan."
+msgstr "Все права защищены."
+
+#: waterApp/templates/includes/header.html:39
+#: waterApp/templates/products.html:163
+msgid "Barcha mahsulotlar"
+msgstr "Все продукты"
+
+#: waterApp/templates/includes/header.html:69
+msgid "Qidirish..."
+msgstr "Поиск..."
+
+#: waterApp/templates/includes/order_modal.html:18
+msgid "To'liq ism"
+msgstr "Полное имя"
+
+#: waterApp/templates/includes/order_modal.html:27
+msgid "Yetkazib berish manzili"
+msgstr "Адрес доставки"
+
+#: waterApp/templates/includes/order_modal.html:28
+msgid "To'liq manzil..."
+msgstr "Полный адрес"
+
+#: waterApp/templates/includes/order_modal.html:33
+msgid "Uy/Bino (№)"
+msgstr "Дом/Здание (№)"
+
+#: waterApp/templates/includes/order_modal.html:37
+msgid "Podezd"
+msgstr "Подъезд"
+
+#: waterApp/templates/includes/order_modal.html:41
+msgid "Qavat"
+msgstr "Этаж"
+
+#: waterApp/templates/includes/order_modal.html:45
+msgid "Xonadon/Ofis"
+msgstr "Квартира/Офис"
+
+#: waterApp/templates/includes/order_modal.html:50
+msgid "Domofon/Eshik kodi"
+msgstr "Домофон/Код двери"
+
+#: waterApp/templates/includes/order_modal.html:54
+msgid "Mo'ljal (orientir)"
+msgstr "Ориентир"
+
+#: waterApp/templates/includes/order_modal.html:55
+msgid "Masalan: maktab yonida"
+msgstr "Например: возле школы"
+
+#: waterApp/templates/includes/order_modal.html:59
+msgid "Afzal vaqt"
+msgstr "Предпочитаемое время"
+
+#: waterApp/templates/includes/order_modal.html:61
+msgid "Ixtiyoriy"
+msgstr "Любое"
+
+#: waterApp/templates/includes/order_modal.html:62
+msgid "Tezroq (bugun)"
+msgstr "Быстрее (сегодня)"
+
+#: waterApp/templates/includes/order_modal.html:63
+msgid "Ertaga"
+msgstr "Завтра"
+
+#: waterApp/templates/includes/order_modal.html:73
+msgid "Yetkazishdan oldin qo'ng'iroq qiling"
+msgstr "Позвоните перед доставкой"
+
+#: waterApp/templates/includes/order_modal.html:79
+msgid "Xaritadan aniq manzilni belgilang"
+msgstr "Укажите точный адрес на карте"
+
+#: waterApp/templates/includes/order_modal.html:82
+msgid "Yo'riqnoma:"
+msgstr "Инструкция:"
+
+#: waterApp/templates/includes/order_modal.html:83
+msgid ""
+"Xaritada o'z manzilingizni toping va bosing. Bu yetkazib beruvchiga aniq "
+"joylashuvni ko'rsatishga yordam beradi."
+msgstr ""
+"Найдите и нажмите на свой адрес на карте. Это поможет курьеру определить "
+"точное местоположение."
+
+#: waterApp/templates/includes/order_modal.html:88
+msgid "Tanlangan joylashuv:"
+msgstr "Выбранное местоположение:"
+
+#: waterApp/templates/includes/order_modal.html:92
+msgid "Koordinatlar:"
+msgstr "Координаты:"
+
+#: waterApp/templates/includes/order_modal.html:101
+msgid "Mahsulot"
+msgstr "Продукт"
+
+#: waterApp/templates/includes/order_modal.html:103
+msgid "Mahsulotni tanlang"
+msgstr "Выберите продукт"
+
+#: waterApp/templates/includes/order_modal.html:110
+msgid "Miqdor"
+msgstr "Количество"
+
+#: waterApp/templates/includes/order_modal.html:114
+msgid "Umumiy narx:"
+msgstr "Общая стоимость:"
+
+#: waterApp/templates/includes/order_modal.html:119
+msgid "Qo'shimcha izoh"
+msgstr "Дополнительный комментарий"
+
+#: waterApp/templates/includes/order_modal.html:120
+msgid "Maxsus talablar yoki izohlar..."
+msgstr "Специальные требования или комментарии..."
+
+#: waterApp/templates/news.html:12
+msgid "Yangiliklar va chegirmalar"
+msgstr "Новости и скидки"
+
+#: waterApp/templates/news.html:13
+msgid "Kompaniya yangiliklari, chegirma aksiyalar va yangiliklar"
+msgstr "Новости компании, скидочные акции и новости"
+
+#: waterApp/templates/news.html:30
+msgid "Aksiyalar"
+msgstr "Акции"
+
+#: waterApp/templates/news.html:68
+msgid "Hech qanday yangilik topilmadi"
+msgstr "Новости не найдены"
+
+#: waterApp/templates/news.html:69
+#, fuzzy
+#| msgid "Boshqa so'rovingizni sinab ko'ring yoki barcha mahsulotlarni ko'ring"
+msgid "Boshqa filter so'rovini sinab ko'ring yoki keyinroq qayting"
+msgstr "Попробуйте другой фильтр запроса или вернитесь позже"
+
+#: waterApp/templates/news.html:119
+msgid "Joriy aksiyalar"
+msgstr "Текущие акции"
+
+#: waterApp/templates/news.html:120
+msgid "Bugungi kunda amal qiluvchi chegirma aksiyalar bilan tanishing!"
+msgstr "Ознакомьтесь с действующими скидочными акциями!"
+
+#: waterApp/templates/news.html:125
+msgid "Barcha aksiyalar"
+msgstr "Все акции"
+
+#: waterApp/templates/products.html:24
+msgid "ta mahsulot topildi"
+msgstr "продуктов найдено"
+
+#: waterApp/templates/products.html:35
+msgid "Kategoriya"
+msgstr "Категория"
+
+#: waterApp/templates/products.html:37 waterApp/templates/products.html:48
+msgid "Barcha"
+msgstr "Все"
+
+#: waterApp/templates/products.html:46
+msgid "Hajm"
+msgstr "Объем"
+
+#: waterApp/templates/products.html:57
+msgid "Qidiruv"
+msgstr "Поиск"
+
+#: waterApp/templates/products.html:59
+msgid "Mahsulot nomi yoki tavsifi bo'yicha qidiruv"
+msgstr "Поиск по названию или описанию продукта"
+
+#: waterApp/templates/products.html:66
+msgid "Saralash"
+msgstr "Сортировка"
+
+#: waterApp/templates/products.html:68
+msgid "Nomi bo'yicha"
+msgstr "По названию"
+
+#: waterApp/templates/products.html:69
+msgid "Narxi (pastdan yuqoriga)"
+msgstr "Цена (по возрастанию)"
+
+#: waterApp/templates/products.html:70
+msgid "Narxi (Yuqoridan pastga)"
+msgstr "Цена (по убыванию)"
+
+#: waterApp/templates/products.html:71
+#, fuzzy
+#| msgid "Yangiliklar"
+msgid "Yangilari"
+msgstr "Новости"
+
+#: waterApp/templates/products.html:93
+#, fuzzy
+#| msgid "Mahsulotlar"
+msgid "Mahsulot rasmi"
+msgstr "Продукты"
+
+#: waterApp/templates/products.html:161
+msgid "Hech qanday mahsulot topilmadi"
+msgstr "Продукты не найдены"
+
+#: waterApp/templates/products.html:162
+msgid "Boshqa so'rovingizni sinab ko'ring yoki barcha mahsulotlarni ko'ring"
+msgstr "Попробуйте другой запрос или просмотрите все продукты"
+
+#: waterApp/templates/products.html:173
+msgid "Suv tanlovi – sog'liq kaliti"
+msgstr "Выбор воды – ключ к здоровью"
+
+#: waterApp/templates/products.html:174
+msgid "TozaSuv bilan sog'lom, toza va foydali hayotni boshlang"
+msgstr "Начните здоровую, чистую и полезную жизнь с TozaSuv"
+
+#: waterConf/settings.py:116
+msgid "Uzbek"
+msgstr "Узбекский"
+
+#: waterConf/settings.py:117
+msgid "Russian"
+msgstr "Русский"
+

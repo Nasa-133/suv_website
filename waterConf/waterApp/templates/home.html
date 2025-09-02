@@ -1,0 +1,452 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}Bosh sahifa{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/home.js' %}"></script>
+{% endblock %}
+{% block content %}
+
+<!-- Hero Section with Carousel -->
+<section class="hero-section wave-bg position-relative overflow-hidden">
+    <div class="hero-bg"></div>
+
+    {% if banners %}
+    <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000">
+        <!-- Carousel Indicators -->
+        <div class="carousel-indicators">
+            {% for banner in banners %}
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="{{ forloop.counter0 }}"
+                    {% if forloop.first %}class="active" aria-current="true"{% endif %}
+                    aria-label="{% trans 'Banner' %} {{ forloop.counter }}">
+            </button>
+            {% endfor %}
+        </div>
+
+        <!-- Carousel Inner -->
+        <div class="carousel-inner">
+            {% for banner in banners %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <div class="container">
+                    <div class="row align-items-center min-vh-100">
+                        <!-- Text Content -->
+                        <div class="col-lg-6">
+                            <div class="hero-content text-white" data-aos="fade-right" data-aos-duration="1000">
+                                <h1 class="display-4 fw-bold mb-4 hero-title">
+                                    {{ banner.title }}
+                                </h1>
+                                {% if banner.subtitle %}
+                                <p class="lead mb-4 hero-subtitle">{{ banner.subtitle }}</p>
+                                {% endif %}
+
+                                <div class="hero-buttons">
+                                    {% if banner.button_text and banner.link %}
+                                    <a href="{{ banner.link }}" class="btn btn-light btn-lg me-3 hero-btn-primary">
+                                        {{ banner.button_text }}
+                                        <i class="fas fa-arrow-right ms-2"></i>
+                                    </a>
+                                    {% endif %}
+                                    <button class="btn btn-outline-light btn-lg hero-btn-secondary"
+                                            data-bs-toggle="modal" data-bs-target="#orderModal">
+                                        <i class="fas fa-shopping-cart me-2"></i> {% trans "Buyurtma berish" %}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Image Content -->
+                        <div class="col-lg-6">
+                            <div class="hero-image text-center" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+                                <div class="image-container">
+                                    {% if banner.image %}
+                                        <img src="{{ banner.image.url }}" alt="{{ banner.title }}" class="img-fluid hero-main-image d-none d-md-block">
+                                    {% else %}
+                                        <img src="{% static 'images/hero-water.png' %}" alt="{% trans 'TozaSuv' %}" class="img-fluid hero-main-image d-none d-md-block">
+                                    {% endif %}
+
+                                    <!-- Floating Water Drops -->
+                                    <div class="water-drops d-none d-md-block">
+                                        <div class="water-drop drop-1"></div>
+                                        <div class="water-drop drop-2"></div>
+                                        <div class="water-drop drop-3"></div>
+                                        <div class="water-drop drop-4"></div>
+                                        <div class="water-drop drop-5"></div>
+                                    </div>
+
+                                    <!-- Ripple Effect -->
+                                    <div class="ripple-container d-none d-md-block">
+                                        <div class="ripple ripple-1"></div>
+                                        <div class="ripple ripple-2"></div>
+                                        <div class="ripple ripple-3"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <div class="carousel-control-icon">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <span class="visually-hidden">{% trans "Oldingi" %}</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <div class="carousel-control-icon">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+            <span class="visually-hidden">{% trans "Keyingi" %}</span>
+        </button>
+    </div>
+    {% endif %}
+
+    <!-- Wave Animation -->
+    <div class="wave-animation">
+        <svg class="waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none">
+            <defs>
+                <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+            </defs>
+            <g class="parallax">
+                <use href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7)" />
+                <use href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+                <use href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+                <use href="#gentle-wave" x="48" y="7" fill="#fff" />
+            </g>
+        </svg>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12" data-aos="fade-up">
+                <h2 class="display-5 fw-bold mb-3">{% trans "Nima uchun TozaSuv?" %}</h2>
+                <p class="lead text-muted">{% trans "Bizning afzalliklarimiz va kafolatlarimiz" %}</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="card card-water h-100 text-center p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-award fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">{% trans "Sifat kafolati" %}</h5>
+                    <p class="text-muted">{% trans "7 bosqichli tozalash tizimi va xalqaro sertifikatlar" %}</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="card card-water h-100 text-center p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-shipping-fast fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">{% trans "Tez yetkazib berish" %}</h5>
+                    <p class="text-muted">{% trans "Toshkent bo'ylab 2-4 soat ichida bepul yetkazib berish" %}</p>
+                </div>
+            </div>
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="card card-water h-100 text-center p-4">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-leaf fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="fw-bold mb-3">{% trans "Ekologik toza" %}</h5>
+                    <p class="text-muted">{% trans "100% qayta ishlanuvchi qadoqlash materiallari" %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Products Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12" data-aos="fade-up">
+                <h2 class="display-5 fw-bold mb-3">{% trans "Bizning mahsulotlar" %}</h2>
+                <p class="lead text-muted">{% trans "Har bir ehtiyoj uchun ideal tanlov" %}</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            {% for product in featured_products %}
+            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                <div class="card product-card h-100">
+
+                    <div class="card-img-wrapper">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                        {% else %}
+                            <img src="{% static 'images/default-product.jpg' %}" class="card-img-top" alt="{{ product.name }}">
+                        {% endif %}
+                    </div>
+
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge bg-primary mb-2 align-self-start">{{ product.size }}</span>
+                        <h6 class="card-title fw-bold">{{ product.name }}</h6>
+                        <p class="card-text text-muted small flex-grow-1">{{ product.short_description|truncatewords:10 }}</p>
+
+                        <div class="price-section mb-3">
+                            {% if product.old_price %}
+                                <span class="old-price text-muted text-decoration-line-through me-2">{{ product.old_price|floatformat:0 }} {% trans "so'm" %}</span>
+                            {% endif %}
+                            <span class="current-price h6 text-primary fw-bold">{{ product.price|floatformat:0 }} {% trans "so'm" %}</span>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary order-btn"
+                                    data-product-id="{{ product.id }}"
+                                    data-product-name="{{ product.name }}"
+                                    data-product-price="{{ product.price }}">
+                                <i class="fas fa-shopping-cart me-2"></i> {% trans "Buyurtma berish" %}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <p class="text-muted">{% trans "Hozircha mahsulotlar mavjud emas." %}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if featured_products %}
+        <div class="text-center mt-5" data-aos="fade-up">
+            <a href="{% url 'products' %}" class="btn btn-outline-primary btn-lg">
+                <i class="fas fa-eye me-2"></i> {% trans "Barcha mahsulotlarni ko'rish" %}
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- About Preview Section -->
+{% if about %}
+<section class="py-5 bg-light wave-bg">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6" data-aos="fade-right">
+                {% if about.image %}
+                    <img src="{{ about.image.url }}" alt="{{ about.title }}" class="img-fluid rounded shadow">
+                {% else %}
+                    <img src="{% static 'images/about-preview.jpg' %}" alt="{{ about.title }}" class="img-fluid rounded shadow">
+                {% endif %}
+            </div>
+            <div class="col-lg-6" data-aos="fade-left">
+                <h2 class="display-6 fw-bold mb-4">{{ about.title }}</h2>
+                <p class="lead mb-4">{{ about.content|truncatewords:30 }}</p>
+                <div class="row g-3 mb-4">
+                    <div class="col-6">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check-circle text-success me-3 fa-lg"></i>
+                            <span>{% trans "ISO sertifikatli" %}</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check-circle text-success me-3 fa-lg"></i>
+                            <span>{% trans "100% tabiiy" %}</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check-circle text-success me-3 fa-lg"></i>
+                            <span>{% trans "Laboratoriya nazorati" %}</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-check-circle text-success me-3 fa-lg"></i>
+                            <span>{% trans "Bepul yetkazib berish" %}</span>
+                        </div>
+                    </div>
+                </div>
+                <a href="{% url 'about' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-arrow-right me-2"></i> {% trans "Batafsil ma'lumot" %}
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Testimonials Section -->
+{% if testimonials %}
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12" data-aos="fade-up">
+                <h2 class="display-5 fw-bold mb-3">{% trans "Mijozlarimiz fikri" %}</h2>
+                <p class="lead text-muted">{% trans "Bizni tanlaganlar nima deydi" %}</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            {% for testimonial in testimonials %}
+            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                <div class="card card-water h-100">
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            {% if testimonial.avatar %}
+                                <img src="{{ testimonial.avatar.url }}" alt="{{ testimonial.full_name }}"
+                                     class="rounded-circle" width="60" height="60">
+                            {% else %}
+                                <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center"
+                                     style="width: 60px; height: 60px;">
+                                    <i class="fas fa-user text-white fa-lg"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="stars mb-3">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= testimonial.rating %}
+                                    <i class="fas fa-star text-warning"></i>
+                                {% else %}
+                                    <i class="far fa-star text-muted"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <p class="card-text mb-3">"{{ testimonial.message|truncatewords:20 }}"</p>
+                        <h6 class="fw-bold mb-1">{{ testimonial.full_name }}</h6>
+                        {% if testimonial.position %}
+                            <small class="text-muted">{{ testimonial.position }}</small>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+<!--        <div class="text-center mt-5" data-aos="fade-up">-->
+<!--            <a href="{% url 'testimonials' %}" class="btn btn-outline-primary">-->
+<!--                {% trans "Barcha sharhlarni ko'rish" %} <i class="fas fa-arrow-right ms-2"></i>-->
+<!--            </a>-->
+<!--        </div>-->
+    </div>
+</section>
+{% endif %}
+
+<!-- Partners Section -->
+{% if partners %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12" data-aos="fade-up">
+                <h2 class="display-6 fw-bold mb-3">{% trans "Bizning hamkorlarimiz" %}</h2>
+                <p class="lead text-muted">{% trans "Ishonchli brendlar biz bilan hamkorlik qiladi" %}</p>
+            </div>
+        </div>
+
+        <!-- Swiper container -->
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                {% for partner in partners %}
+                <div class="swiper-slide text-center">
+                    {% if partner.logo %}
+                        <img src="{{ partner.logo.url }}" alt="{{ partner.name }}"
+                             class="img-fluid grayscale hover-color" style="max-height: 60px;">
+                    {% else %}
+                        <div class="bg-light p-3 rounded">{{ partner.name }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+
+<!-- News Section -->
+{% if latest_news %}
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12" data-aos="fade-up">
+                <h2 class="display-5 fw-bold mb-3">{% trans "So'nggi yangiliklar" %}</h2>
+                <p class="lead text-muted">{% trans "Kompaniya faoliyati va aksiyalar haqida" %}</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            {% for news in latest_news %}
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                <div class="card h-100">
+                    {% if news.image %}
+                        <img src="{{ news.image.url }}" class="card-img-top" alt="{{ news.title }}" style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        {% if news.is_discount %}
+                            <span class="badge bg-danger mb-2 align-self-start">{% trans "Aksiya" %}</span>
+                        {% endif %}
+                        <h6 class="card-title fw-bold">{{ news.title }}</h6>
+                        <p class="card-text text-muted flex-grow-1">{{ news.excerpt|truncatewords:15 }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small class="text-muted">{{ news.created_at|date:"d M, Y" }}</small>
+                            <a href="{% url 'news_detail' news.id %}" class="btn btn-outline-primary btn-sm">
+                                {% trans "O'qish" %} <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-5" data-aos="fade-up">
+            <a href="{% url 'news' %}" class="btn btn-outline-primary btn-lg">
+                {% trans "Barcha yangiliklar" %} <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white wave-bg">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-8" data-aos="fade-up">
+                <h2 class="display-6 fw-bold mb-4">{% trans "Bugun TozaSuv bilan tanishing!" %}</h2>
+                <p class="lead mb-4">
+                    {% trans "Sog'lom turmush tarzi TozaSuv bilan boshlanadi. Hoziroq buyurtma bering va toza suvning ta'mini his eting." %}
+                </p>
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <button class="btn btn-light btn-lg" data-bs-toggle="modal" data-bs-target="#orderModal">
+                        <i class="fas fa-shopping-cart me-2"></i> {% trans "Buyurtma berish" %}
+                    </button>
+                    <a href="{% url 'contact' %}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-phone me-2"></i> {% trans "Bog'lanish" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+  var swiper = new Swiper(".mySwiper", {
+    slidesPerView: 5,
+    spaceBetween: 30,
+    loop: true,
+    autoplay: {
+      delay: 2000,
+      disableOnInteraction: false,
+    },
+    breakpoints: {
+      320: { slidesPerView: 2, spaceBetween: 10 },
+      768: { slidesPerView: 3, spaceBetween: 20 },
+      1024: { slidesPerView: 5, spaceBetween: 30 },
+    }
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,374 @@
+{% load static %}
+{% load i18n %}
+<footer class="main-footer position-relative overflow-hidden py-5" data-aos="fade-up" data-aos-duration="1000">
+    <!-- Wave effect at the top of the footer -->
+    <div class="footer-wave-bg">
+        <svg class="waves" xmlns="http://www.w3.org/2000/svg" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+            <defs>
+                <path id="gentle-wave-footer" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+            </defs>
+            <g class="parallax">
+                <use href="#gentle-wave-footer" x="48" y="0" fill="rgba(255,255,255,0.7)" />
+                <use href="#gentle-wave-footer" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+                <use href="#gentle-wave-footer" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+                <use href="#gentle-wave-footer" x="48" y="7" fill="#fff" />
+            </g>
+        </svg>
+    </div>
+
+    <div class="container footer-content-wrapper mt-5">
+    <div class="row g-5">
+        <div class="col-lg-4">
+            <div class="footer-brand mb-4">
+                <a href="{% url 'home' %}" class="d-flex align-items-center text-decoration-none">
+                    {% if site_config.logo %}
+                        <img src="{{ site_config.logo.url }}" alt="{{ site_config.site_name }}" height="45" class="me-3">
+                    {% endif %}
+                    <span class="footer-brand-text">{{ site_config.site_name }}</span>
+                </a>
+            </div>
+            <p class="footer-about text-white-75 mb-4">
+                {% trans "Tabiatning eng toza sovg'asi - tog' buloqlaridan sizning stolingingizgacha. Har tomchida sog'lik va sof tabiat." %}
+            </p>
+            <div class="social-links-container">
+                {% if site_config.facebook %}
+                <a href="{{ site_config.facebook }}" class="social-link facebook me-3" target="_blank" title="{% trans 'Facebook' %}">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                {% endif %}
+                {% if site_config.instagram %}
+                <a href="{{ site_config.instagram }}" class="social-link instagram me-3" target="_blank" title="{% trans 'Instagram' %}">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                {% endif %}
+                {% if site_config.telegram %}
+                <a href="{{ site_config.telegram }}" class="social-link telegram me-3" target="_blank" title="{% trans 'Telegram' %}">
+                    <i class="fab fa-telegram-plane"></i>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-lg-2 col-md-6">
+            <h6 class="footer-title fw-bold mb-3">{% trans "Sahifalar" %}</h6>
+            <ul class="list-unstyled footer-links-list">
+                <li class="mb-2"><a href="{% url 'home' %}" class="footer-link">{% trans "Bosh sahifa" %}</a></li>
+                <li class="mb-2"><a href="{% url 'about' %}" class="footer-link">{% trans "Biz haqimizda" %}</a></li>
+                <li class="mb-2"><a href="{% url 'products' %}" class="footer-link">{% trans "Mahsulotlar" %}</a></li>
+                <li class="mb-2"><a href="{% url 'news' %}" class="footer-link">{% trans "Yangiliklar" %}</a></li>
+                <li class="mb-2"><a href="{% url 'contact' %}" class="footer-link">{% trans "Aloqa" %}</a></li>
+            </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <h6 class="footer-title fw-bold mb-3">{% trans "Aloqa ma'lumotlari" %}</h6>
+            <ul class="list-unstyled footer-links-list">
+                {% if site_config.phone %}
+                <li class="mb-2 d-flex align-items-center contact-item">
+                    <i class="fas fa-phone me-2 text-primary contact-icon"></i>
+                    <a href="tel:{{ site_config.phone }}" class="footer-link">{{ site_config.phone }}</a>
+                </li>
+                {% endif %}
+                {% if site_config.email %}
+                <li class="mb-2 d-flex align-items-center contact-item">
+                    <i class="fas fa-envelope me-2 text-primary contact-icon"></i>
+                    <a href="mailto:{{ site_config.email }}" class="footer-link">{{ site_config.email }}</a>
+                </li>
+                {% endif %}
+                {% if site_config.address %}
+                <li class="mb-2 d-flex align-items-center contact-item">
+                    <i class="fas fa-map-marker-alt me-2 text-primary contact-icon"></i>
+                    <span class="footer-link-text">{{ site_config.address }}</span>
+                </li>
+                {% endif %}
+                {% if site_config.working_hours %}
+                <li class="mb-2 d-flex align-items-center contact-item">
+                    <i class="fas fa-clock me-2 text-primary contact-icon"></i>
+                    <span class="footer-link-text">{{ site_config.working_hours }}</span>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <h6 class="footer-title fw-bold mb-3">{% trans "Bizning xizmatlar" %}</h6>
+            <ul class="list-unstyled footer-links-list">
+                <li class="mb-2"><a href="#" class="footer-link">{% trans "Uyga yetkazib berish" %}</a></li>
+                <li class="mb-2"><a href="#" class="footer-link">{% trans "Optom savdo" %}</a></li>
+                <li class="mb-2"><a href="#" class="footer-link">{% trans "Korxonalar uchun" %}</a></li>
+                <li class="mb-2"><a href="#" class="footer-link">{% trans "24/7 qo'llab-quvvatlash" %}</a></li>
+                <li class="mb-2"><a href="#" class="footer-link">{% trans "Sifat kafolati" %}</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <hr class="my-5 footer-divider">
+
+    <div class="row align-items-center">
+        <div class="col-md-12 text-center">
+            <p class="mb-0 footer-copyright">
+                &copy; {% now "Y" %} iBots.uz. {% trans "Barcha huquqlar himoyalangan." %}
+            </p>
+        </div>
+    </div>
+</div>
+</footer>
+
+<!-- Back to Top Button -->
+<button id="backToTop" class="btn btn-primary btn-floating" title="Yuqoriga qaytish">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<style>
+/* footer.css - Water-themed Footer & Back to Top Styles */
+
+:root {
+    --primary-blue: #0066CC;
+    --deep-blue: #0A4A8A;
+    --light-blue-100: #E3F2FD;
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main-footer {
+    background: var(--deep-blue);
+    color: var(--light-blue-100);
+    position: relative;
+    overflow: hidden;
+    padding-top: 100px !important;
+}
+
+.footer-wave-bg {
+    position: absolute;
+    top: -100px; /* Adjust this value to position the wave */
+    left: 0;
+    width: 100%;
+    z-index: 1;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.waves {
+    position: relative;
+    width: 100%;
+    height: 100px;
+    margin-bottom: -7px;
+    min-height: 100px;
+    max-height: 150px;
+}
+
+.parallax > use {
+    animation: moveForever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+}
+.parallax > use:nth-child(1) { animation-delay: -2s; animation-duration: 7s; }
+.parallax > use:nth-child(2) { animation-delay: -3s; animation-duration: 10s; }
+.parallax > use:nth-child(3) { animation-delay: -4s; animation-duration: 13s; }
+.parallax > use:nth-child(4) { animation-delay: -5s; animation-duration: 20s; }
+
+@keyframes moveForever {
+    0% { transform: translate3d(-90px,0,0); }
+    100% { transform: translate3d(85px,0,0); }
+}
+
+.footer-content-wrapper {
+    position: relative;
+    z-index: 2;
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.footer-brand-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+}
+
+.footer-about {
+    line-height: 1.6;
+}
+
+.footer-title {
+    color: white;
+    font-size: 1.25rem;
+    position: relative;
+    padding-bottom: 10px;
+}
+.footer-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 50px;
+    height: 3px;
+    background: var(--primary-blue);
+    border-radius: 2px;
+}
+
+.footer-links-list {
+    margin: 0;
+    padding: 0;
+}
+
+.footer-link, .footer-link-text {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-weight: 400;
+    transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.footer-links-list li i {
+    font-size: 1rem;
+    color: var(--primary-blue);
+    width: 20px;
+    text-align: center;
+}
+
+.footer-divider {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.footer-copyright {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+}
+
+/* Social Links */
+.social-links-container {
+    display: flex;
+    gap: 15px;
+}
+
+.social-link {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    transition: var(--transition-smooth);
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.social-link:hover {
+    transform: translateY(-5px);
+    background: var(--primary-blue);
+    box-shadow: 0 8px 25px rgba(0, 102, 204, 0.3);
+}
+
+/* Back to Top Button */
+#backToTop {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    z-index: 1000;
+    background: var(--primary-blue);
+    border: none;
+    color: white;
+    box-shadow: 0 8px 25px rgba(0, 102, 204, 0.3);
+}
+
+#backToTop.show {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+
+#backToTop:hover {
+    transform: scale(1.1);
+    background: var(--deep-blue);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .main-footer {
+        padding-top: 60px !important;
+    }
+
+    .footer-brand {
+        justify-content: flex-start;
+    }
+
+    .social-links-container {
+        justify-content: flex-start;
+        margin-bottom: 2rem;
+    }
+
+    .footer-title::after {
+        left: 0;
+        transform: none;
+    }
+
+    .footer-links-list li.contact-item {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .footer-links-list li.contact-item .contact-icon {
+        display: inline-block;
+    }
+
+    .footer-links-list li i {
+        display: inline-block;
+    }
+
+    .footer-copyright {
+        margin-top: 1rem;
+    }
+
+    .footer-divider {
+        margin-top: 2rem !important;
+        margin-bottom: 2rem !important;
+    }
+
+    #backToTop {
+        width: 45px;
+        height: 45px;
+        bottom: 20px;
+        right: 20px;
+    }
+}
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const backToTopBtn = document.getElementById('backToTop');
+
+        // Back to top button functionality
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    });
+</script>

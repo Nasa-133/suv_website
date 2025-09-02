@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block title %}{{ page_title }} - {{ site_config.site_name }}{% endblock %}
+{% block og_title %}{{ page_title }} - {{ site_config.site_name }}{% endblock %}
+{% block og_description %}{{ meta_description }}{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/news.css' %}">
+<!-- Animate.css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<!-- AOS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="hero-section hero-split position-relative overflow-hidden">
+    <!-- Bubbles (decor) -->
+    <div class="hero-bubbles" aria-hidden="true">
+        <span class="bubble b1"></span>
+        <span class="bubble b2"></span>
+        <span class="bubble b3"></span>
+        <span class="bubble b4"></span>
+        <span class="bubble b5"></span>
+        <span class="bubble b6"></span>
+        <span class="bubble b7"></span>
+        <span class="bubble b8"></span>
+    </div>
+    <div class="container position-relative">
+        <div class="hero-inner">
+            <!-- Left: content -->
+            <div class="content_flex">
+                <div class="hero-copy text-white animate__animated animate__fadeInLeft">
+                    <h1 class="fw-bold mb-3">{% trans "Yangiliklar va chegirmalar" %}</h1>
+                    <p class="lead mb-4">{% trans "Kompaniya yangiliklari, chegirma aksiyalar va yangiliklar" %}</p>
+                    <div class="d-flex flex-wrap context_text gap-3">
+                        <a href="{% url 'news' %}?filter=discount"
+                           class="btn btn-light btn-lg animate__animated animate__pulse animate__infinite">
+                            <i class="fas fa-percent me-2"></i> {% trans "Aksiyalar" %}
+                        </a>
+                        <a href="{% url 'news' %}?filter=all"
+                           class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-newspaper me-2"></i> {% trans "Barcha yangiliklar" %}
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: image area -->
+            <div class="hero-media animate__animated animate__fadeInRight">
+                <div class="hero-figure">
+                    <img class="hero-visual"
+                         src="{% static 'images/women_water.png' %}"
+                         alt="{% trans 'Suv mahsuloti' %}"
+                         loading="eager"/>
+                    <!-- Glow dekorlar -->
+                    <span class="glow g1"></span>
+                    <span class="glow g2"></span>
+                    <span class="glow g3"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Waves at bottom -->
+    <div class="hero-waves" aria-hidden="true">
+        <svg viewBox="0 0 120 28" preserveAspectRatio="none">
+            <defs>
+                <path id="wavePath" d="M0,16 C30,32 70,0 120,16 L120,32 L0,32 Z"/>
+            </defs>
+            <use href="#wavePath" class="wave wave1"/>
+            <use href="#wavePath" class="wave wave2"/>
+            <use href="#wavePath" class="wave wave3"/>
+        </svg>
+    </div>
+</section>
+
+<!-- Filter Section -->
+<section class="filter-section py-4 bg-light" data-aos="fade-up">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <div class="btn-group" role="group">
+                    <a href="{% url 'news' %}"
+                       class="btn {% if current_filter == 'all' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                        <i class="fas fa-newspaper me-2"></i> {% trans "Barcha yangiliklar" %}
+                    </a>
+                    <a href="?filter=news"
+                       class="btn {% if current_filter == 'news' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                        <i class="fas fa-bullhorn me-2"></i> {% trans "Yangiliklar" %}
+                    </a>
+                    <a href="?filter=discount"
+                       class="btn {% if current_filter == 'discount' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                        <i class="fas fa-percent me-2"></i> {% trans "Aksiyalar" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- News Grid -->
+<section class="news-section py-5">
+    <div class="container">
+        <div class="row g-4">
+            {% if news %}
+            {% for item in news %}
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                <div class="card h-100 shadow-sm animate__animated animate__zoomIn">
+                    {% if item.image %}
+                    <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.title }}"
+                         style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        {% if item.is_discount %}
+                        <span class="badge bg-danger mb-2 align-self-start animate__animated animate__bounce">{% trans "Aksiya" %}</span>
+                        {% endif %}
+                        <h6 class="card-title fw-bold mb-3">{{ item.title }}</h6>
+                        <p class="card-text text-muted flex-grow-1">{{ item.excerpt|truncatewords:15 }}</p>
+                        <div class="d-flex justify-content-between align-items-center mt-auto">
+                            <small class="text-muted">{{ item.created_at|date:"d M, Y" }}</small>
+                            <a href="{% url 'news_detail' item.id %}" class="btn btn-outline-primary btn-sm">
+                                {% trans "O'qish" %} <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="col-12 text-center animate__animated animate__fadeInUp">
+                <i class="fas fa-exclamation-triangle fa-4x text-muted mb-3"></i>
+                <h4 class="mb-3">{% trans "Hech qanday yangilik topilmadi" %}</h4>
+                <p class="text-muted">{% trans "Boshqa filter so'rovini sinab ko'ring yoki keyinroq qayting" %}</p>
+                <a href="{% url 'news' %}" class="btn btn-primary">{% trans "Barcha yangiliklar" %}</a>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Pagination -->
+        {% if page_obj.has_other_pages %}
+            {% include "includes/pagination.html" %}
+        {% endif %}
+    </div>
+</section>
+
+<!-- Discount Banner -->
+<section class="py-5 bg-light" data-aos="fade-up">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-md-6 text-center text-md-start animate__animated animate__fadeInLeft">
+                <h2 class="display-6 fw-bold mb-3">{% trans "Joriy aksiyalar" %}</h2>
+                <p class="text-muted mb-0">{% trans "Bugungi kunda amal qiluvchi chegirma aksiyalar bilan tanishing!" %}</p>
+            </div>
+            <div class="col-md-6 animate__animated animate__fadeInRight">
+                <div class="d-flex flex-wrap justify-content-center justify-content-md-end gap-3">
+                    <a href="?filter=discount" class="btn btn-primary btn-lg">
+                        <i class="fas fa-percent me-2"></i> {% trans "Barcha aksiyalar" %}
+                    </a>
+                    <a href="{% url 'products' %}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-shopping-cart me-2"></i> {% trans "Mahsulotlar" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<!-- AOS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1000,
+        once: true
+    });
+</script>
+{% endblock %}

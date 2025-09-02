@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% include 'waterApp/includes/order_modal.html' %}
+
+{% block title %}{{ page_title }} - {{ site_config.site_name }}{% endblock %}
+{% block og_title %}{{ page_title }} - {{ site_config.site_name }}{% endblock %}
+{% block og_description %}{{ meta_description }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/news.css' %}">
+<!-- AOS kutubxona CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+   <section class="hero-section hero-split position-relative overflow-hidden">
+    <!-- Bubbles (decor) -->
+    <div class="hero-bubbles" aria-hidden="true">
+        <span class="bubble b1"></span> <span class="bubble b2"></span>
+        <span class="bubble b3"></span> <span class="bubble b4"></span>
+        <span class="bubble b5"></span> <span class="bubble b6"></span>
+        <span class="bubble b7"></span> <span class="bubble b8"></span>
+    </div>
+    <div class="container position-relative">
+        <div class="hero-inner">
+            <!-- Left: content -->
+            <div class="content_flex">
+                <div class="hero-copy text-white" data-aos="fade-right" data-aos-duration="1000">
+                    <h1 class="fw-bold mb-3">{% trans "Mahsulotlar" %}</h1>
+                    <p class="lead mb-4">{% trans "Har bir ehtiyoj uchun ideal tanlov" %}</p>
+                    <div class="d-flex flex-wrap context_text gap-3">
+                        <button class="btn btn-light btn-lg"
+                                data-bs-toggle="modal" data-bs-target="#orderModal">
+                            <i class="fas fa-shopping-cart me-2"></i> {% trans "Buyurtma berish" %}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: image area -->
+            <div class="hero-media" data-aos="zoom-in" data-aos-duration="1200">
+                <div class="hero-figure">
+                    <img
+                        class="hero-visual"
+                        src="{% static 'images/erasebg-transformed.png' %}"
+                        alt="{% trans 'Suv mahsuloti' %}"
+                        loading="eager"
+                    />
+                    <!-- Glow dekorlar -->
+                    <span class="glow g1"></span>
+                    <span class="glow g2"></span>
+                    <span class="glow g3"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Waves at bottom -->
+    <div class="hero-waves" aria-hidden="true">
+        <svg viewBox="0 0 120 28" preserveAspectRatio="none">
+            <defs>
+                <path id="wavePath" d="M0,16 C30,32 70,0 120,16 L120,32 L0,32 Z"/>
+            </defs>
+            <use href="#wavePath" class="wave wave1"/>
+            <use href="#wavePath" class="wave wave2"/>
+            <use href="#wavePath" class="wave wave3"/>
+        </svg>
+    </div>
+</section>
+
+    <!-- Filters & Products -->
+    <section class="products-section py-5">
+        <div class="container" data-aos="fade-up" data-aos-duration="1000">
+            <div class="row mb-4">
+                <div class="col-12 d-flex justify-content-between align-items-center">
+                    <h2 class="h4 fw-bold mb-0">{% trans "Mahsulotlar" %}</h2>
+                    <span class="text-muted">{{ total_products }} {% trans "ta mahsulot topildi" %}</span>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="row mb-4" data-aos="fade-down" data-aos-duration="1000">
+                <div class="col-12">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <form class="row g-3" method="get">
+                                <div class="col-md-3">
+                                    <label class="form-label fw-bold">{% trans "Kategoriya" %}</label>
+                                    <select name="category" class="form-select">
+                                        <option value="">{% trans "Barcha" %}</option>
+                                        {% for category in categories %}
+                                            <option value="{{ category.id }}" {% if current_category|add:"" == category.id|add:"" %}selected{% endif %}>
+                                                {{ category.name }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="form-label fw-bold">{% trans "Hajm" %}</label>
+                                    <select name="size" class="form-select">
+                                        <option value="">{% trans "Barcha" %}</option>
+                                        {% for key, label in sizes %}
+                                            <option value="{{ key }}" {% if current_size == key %}selected{% endif %}>
+                                                {{ label }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label fw-bold">{% trans "Qidiruv" %}</label>
+                                    <div class="input-group">
+                                        <input type="text" name="search" class="form-control" placeholder="{% trans "Mahsulot nomi yoki tavsifi bo'yicha qidiruv" %}">
+                                        <button class="btn btn-primary" type="submit">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label class="form-label fw-bold">{% trans "Saralash" %}</label>
+                                    <select name="sort" class="form-select">
+                                        <option value="name" {% if current_sort == "name" %}selected{% endif %}>{% trans "Nomi bo'yicha" %}</option>
+                                        <option value="price_low" {% if current_sort == "price_low" %}selected{% endif %}>{% trans "Narxi (pastdan yuqoriga)" %}</option>
+                                        <option value="price_high" {% if current_sort == "price_high" %}selected{% endif %}>{% trans "Narxi (Yuqoridan pastga)" %}</option>
+                                        <option value="newest" {% if current_sort == "newest" %}selected{% endif %}>{% trans "Yangilari" %}</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            {% if products %}
+                <div class="row g-4 mt-2">
+                    {% for product in products %}
+                        <div class="col-lg-3 col-md-4 col-sm-6" data-aos="zoom-in" data-aos-delay="{{ forloop.counter|add:100 }}">
+                            <div class="card product-card h-100 border-0 shadow-sm">
+                                {% if product.get_discount_percent %}
+                                    <div class="product-badge">-{{ product.get_discount_percent }}%</div>
+                                {% endif %}
+                                <div class="card-img-wrapper">
+                                    {% if product.image %}
+                                        <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                                    {% else %}
+                                        <img src="{% static 'images/default-product.jpg' %}" class="card-img-top" alt="{% trans 'Mahsulot rasmi' %}">
+                                    {% endif %}
+                                </div>
+                                <div class="card-body d-flex flex-column">
+                                    <span class="badge bg-primary mb-2 align-self-start">{{ product.size }}</span>
+                                    <h6 class="card-title fw-bold mb-2">{{ product.name }}</h6>
+                                    <p class="card-text text-muted small flex-grow-1">{{ product.short_description|truncatewords:10 }}</p>
+                                    <div class="price-section mb-3">
+                                        {% if product.old_price %}
+                                            <span class="old-price text-muted text-decoration-line-through me-2">{{ product.old_price|floatformat:0 }} {% trans "so'm" %}</span>
+                                        {% endif %}
+                                        <span class="current-price h6 text-primary fw-bold">{{ product.price|floatformat:0 }} {% trans "so'm" %}</span>
+                                    </div>
+                                    <div class="d-grid">
+                                        <button class="btn btn-primary order-btn"
+                                                data-product-id="{{ product.id }}"
+                                                data-product-name="{{ product.name }}"
+                                                data-product-price="{{ product.price }}">
+                                            <i class="fas fa-shopping-cart me-2"></i> {% trans "Buyurtma berish" %}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            <!-- Pagination -->
+{% if page_obj.has_other_pages %}
+    {% include "includes/pagination.html" %}
+{% endif %}
+
+
+            {% else %}
+                <div class="row mt-5" data-aos="fade-up">
+                    <div class="col-12 text-center">
+                        <i class="fas fa-box-open fa-4x text-muted mb-3"></i>
+                        <h4 class="mb-3">{% trans "Hech qanday mahsulot topilmadi" %}</h4>
+                        <p class="text-muted">{% trans "Boshqa so'rovingizni sinab ko'ring yoki barcha mahsulotlarni ko'ring" %}</p>
+                        <a href="{% url 'products' %}" class="btn btn-outline-primary">{% trans "Barcha mahsulotlar" %}</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5 bg-light text-center" data-aos="fade-up" data-aos-duration="1200">
+        <div class="container">
+            <h2 class="display-6 fw-bold mb-3">{% trans "Suv tanlovi – sog'liq kaliti" %}</h2>
+            <p class="text-muted mb-4">{% trans "TozaSuv bilan sog'lom, toza va foydali hayotni boshlang" %}</p>
+            <button class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#orderModal">
+                <i class="fas fa-shopping-cart me-2"></i> {% trans "Buyurtma berish" %}
+            </button>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_js %}
+<!-- AOS kutubxona JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    AOS.init({
+        once: true, // faqat bir marta animatsiya qilish
+        duration: 800, // umumiy davomiylik
+        offset: 100   // qaysi masofadan boshlab animatsiya qilish
+    });
+</script>
+{% endblock %}

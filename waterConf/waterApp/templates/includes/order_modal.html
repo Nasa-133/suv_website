@@ -1,0 +1,286 @@
+{% load static %}
+{% load i18n %}
+<div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="orderModalLabel">
+                <i class="fas fa-shopping-cart me-2"></i>{% trans "Buyurtma berish" %}
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+          <div class="modal-body">
+    <form id="orderForm" method="post" action="{% url 'create_order_ajax' %}">
+      {% csrf_token %}
+
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label fw-bold">{% trans "To'liq ism" %} <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" name="full_name" required>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label fw-bold">{% trans "Telefon" %} <span class="text-danger">*</span></label>
+          <input type="tel" class="form-control" name="phone" placeholder="+998 90 123 45 67" required>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label fw-bold">{% trans "Yetkazib berish manzili" %} <span class="text-danger">*</span></label>
+          <textarea class="form-control" name="address" rows="2" placeholder="{% trans 'To\'liq manzil...' %}" required></textarea>
+        </div>
+
+        <!-- Batafsil manzil -->
+        <div class="col-md-4">
+          <label class="form-label fw-bold">{% trans "Uy/Bino (№)" %}</label>
+          <input type="text" class="form-control" name="building" placeholder="12A">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-bold">{% trans "Podezd" %}</label>
+          <input type="number" min="1" class="form-control" name="entrance" placeholder="1">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label fw-bold">{% trans "Qavat" %}</label>
+          <input type="number" min="1" class="form-control" name="floor" placeholder="3">
+        </div>
+
+        <!-- Xaritadan tanlash (ixtiyoriy) -->
+        <div class="col-12">
+          <label class="form-label fw-bold">{% trans "Xaritadan aniq manzilni belgilang" %}</label>
+          <div class="map-instructions mb-2 small text-muted">
+            <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+            <strong>{% trans "Yo'riqnoma:" %}</strong>
+            {% trans "Xaritada o'z manzilingizni toping va bosing. Bu yetkazib beruvchiga aniq joylashuvni ko'rsatishga yordam beradi." %}
+          </div>
+          <div id="map" style="height: 260px; border-radius: 10px; overflow: hidden;"></div>
+          <div id="selectedLocation" class="selected-location d-none mt-2">
+            <i class="fas fa-check-circle me-2 text-success"></i>
+            <strong>{% trans "Tanlangan joylashuv:" %}</strong>
+            <span id="locationText"></span>
+            <br>
+            <small class="text-muted">
+              <i class="fas fa-globe me-1"></i> {% trans "Koordinatlar:" %} <span id="coordinates"></span>
+            </small>
+          </div>
+          <input type="hidden" name="latitude" id="latitude">
+          <input type="hidden" name="longitude" id="longitude">
+        </div>
+
+        <!-- Mahsulot va narx -->
+        <div class="col-md-6">
+          <label class="form-label fw-bold">{% trans "Mahsulot" %} <span class="text-danger">*</span></label>
+          <select class="form-select" name="product_id" id="modal_product" required>
+            <option value="">{% trans "Mahsulotni tanlang" %}</option>
+            {% for p in featured_products %}
+              <option value="{{ p.id }}" data-price="{{ p.price }}">{{ p.name }} - {{ p.size }} ({{ p.price|floatformat:0 }} {% trans "so'm" %})</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label fw-bold">{% trans "Miqdor" %}</label>
+          <input type="number" class="form-control" name="quantity" id="modal_quantity" value="1" min="1" max="100">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label fw-bold d-block">{% trans "Umumiy narx:" %}</label>
+          <div class="h5 mb-0"><span id="totalPrice">0</span> {% trans "so'm" %}</div>
+        </div>
+
+        <div class="col-12">
+          <label class="form-label fw-bold">{% trans "Qo'shimcha izoh" %}</label>
+          <textarea class="form-control" name="notes" rows="2" placeholder="{% trans 'Maxsus talablar yoki izohlar...' %}"></textarea>
+        </div>
+      </div>
+
+      <div class="d-grid mt-3">
+        <button type="submit" class="btn btn-primary btn-lg">
+          <i class="fas fa-paper-plane me-2"></i>{% trans "Buyurtma berish" %}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+    </div>
+</div>
+</div>
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css"/>
+
+<style>
+    #map {
+        height: 300px;
+        width: 100%;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let map, marker, userMarker;
+    let selectedCoords = null;
+
+    const form            = document.getElementById('orderForm');
+    const productSelect   = form.querySelector('[name="product_id"]');
+    const quantityInput   = form.querySelector('[name="quantity"]');
+    const totalPriceSpan  = document.getElementById('totalPrice');
+
+    // Modal ochilganda map init
+    document.getElementById('orderModal').addEventListener('shown.bs.modal', () => {
+        if (!map) initMap();
+        setTimeout(() => map.invalidateSize(), 300);
+    });
+
+    // Mapni ishga tushuruvchi funksiya
+    function initMap() {
+        map = L.map('map').setView([41.2995, 69.2401], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        // Foydalanuvchining joriy joylashuvini ko‘rsatish marker
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(pos => {
+                const lat = pos.coords.latitude;
+                const lng = pos.coords.longitude;
+
+                // Asosiy xaritani shu joyga tekislash
+                map.setView([lat, lng], 15);
+
+                // User marker
+                userMarker = L.marker([lat, lng], {
+                    icon: L.icon({
+                        iconUrl: '{% static "images/user-location.png" %}',
+                        iconSize: [45, 45],
+                        iconAnchor: [22, 45],
+                        popupAnchor: [0, -45]
+                    })
+                }).addTo(map).bindPopup('Sizning joylashuvingiz').openPopup();
+
+                // Bosilganda location sifatida qabul qilish
+                userMarker.on('click', () => {
+                    placeMarker(lat, lng);
+                    showSelectedLocation(lat, lng);
+                    reverseGeocode(lat, lng);
+                });
+            });
+        }
+
+        // Xarita bosilganda marker va koordinatalar
+        map.on('click', e => {
+            const {lat, lng} = e.latlng;
+            placeMarker(lat, lng);
+            showSelectedLocation(lat, lng);
+            reverseGeocode(lat, lng);
+        });
+    }
+
+    // Marker qo‘yish funksiyasi
+    function placeMarker(lat, lng) {
+        if (marker) map.removeLayer(marker);
+        marker = L.marker([lat, lng]).addTo(map).bindPopup('Tanlangan manzil').openPopup();
+        selectedCoords = {lat, lng};
+        document.getElementById('latitude').value  = lat.toFixed(6);
+        document.getElementById('longitude').value = lng.toFixed(6);
+    }
+
+    // Location ma’lumotlarini ko‘rsatish
+    function showSelectedLocation(lat, lng) {
+        const locationDiv = document.getElementById('selectedLocation');
+        const locationText= document.getElementById('locationText');
+        const coordinates = document.getElementById('coordinates');
+
+        locationText.textContent = 'Tanlangan manzil';
+        coordinates.textContent  = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+        locationDiv.classList.remove('d-none');
+    }
+
+    // Reverse geocoding (display_name olish)
+    function reverseGeocode(lat, lng) {
+        fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.display_name) {
+                    document.getElementById('locationText').textContent = data.display_name;
+                    const addrField = form.querySelector('[name="address"]');
+                    if (addrField && !addrField.value.trim()) {
+                        addrField.value = data.display_name;
+                    }
+                }
+            })
+            .catch(console.error);
+    }
+
+    // Narxni hisoblash
+    function updateTotalPrice() {
+        const price    = parseFloat(productSelect.selectedOptions[0]?.dataset.price || 0);
+        const qty      = parseInt(quantityInput.value || 1, 10);
+        const total    = price * qty;
+        totalPriceSpan.textContent = total.toLocaleString('uz-UZ') + ' so\'m';
+    }
+    productSelect.addEventListener('change', updateTotalPrice);
+    quantityInput.addEventListener('input', updateTotalPrice);
+
+    // Form yuborish
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const origHTML  = submitBtn.innerHTML;
+
+        // FormData → JSON
+        const fd = new FormData(form);
+        const data = Object.fromEntries(fd.entries());
+        if (selectedCoords) {
+            data.latitude  = selectedCoords.lat;
+            data.longitude = selectedCoords.lng;
+            data.google_maps_link = `https://www.google.com/maps?q=${selectedCoords.lat},${selectedCoords.lng}`;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Yuborilmoqda...';
+
+        fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': data.csrfmiddlewaretoken
+            },
+            body: JSON.stringify(data)
+        })
+        .then(r => r.json())
+        .then(res => {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-' + (res.success ? 'success' : 'danger') + ' alert-dismissible fade show';
+            alertDiv.innerHTML = res.message +
+              (res.location ? `<br><a href="${res.location.map_link}" target="_blank">Google Maps</a>` : '') +
+              '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+            form.prepend(alertDiv);
+
+            if (res.success) {
+                form.reset(); updateTotalPrice();
+                if (marker) { map.removeLayer(marker); marker = null; }
+                selectedCoords = null;
+                document.getElementById('selectedLocation').classList.add('d-none');
+                setTimeout(()=> bootstrap.Modal.getInstance(orderModal).hide(), 2000);
+            }
+        })
+        .catch(()=>{
+            alert('Xatolik yuz berdi. Iltimos, qaytadan urinib ko‘ring.');
+        })
+        .finally(()=>{
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = origHTML;
+        });
+    });
+
+    // Agar modalga tugma orqali oldindan productId uzatilsa:
+    orderModal.addEventListener('show.bs.modal', function(event) {
+        const btn = event.relatedTarget;
+        const pid = btn?.dataset?.productId;
+        if (pid) {
+            productSelect.value = pid;
+            updateTotalPrice();
+        }
+    });
+});
+</script>
+

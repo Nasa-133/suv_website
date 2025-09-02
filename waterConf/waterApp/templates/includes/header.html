@@ -1,0 +1,85 @@
+{% load static i18n %}
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+    <div class="container">
+        <!-- Brand -->
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+            {% if site_config.logo %}
+                <img src="{{ site_config.logo.url }}" alt="" height="40" class="me-2">
+            {% endif %}
+            <span>{{ site_config.site_name }}</span>
+        </a>
+
+        <!-- Mobile Toggle -->
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navigation Menu -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                       href="{% url 'home' %}">
+                        <i class="fas fa-home me-1 d-md-none"></i> {% trans "Bosh sahifa" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}"
+                       href="{% url 'about' %}">
+                        <i class="fas fa-info-circle me-1 d-md-none"></i> {% trans "Biz haqimizda" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'products' %}active{% endif %}"
+                       href="{% url 'products' %}">
+                        <i class="fas fa-newspaper me-1 d-md-none"></i> {% trans "Mahsulotlar" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'news' %}active{% endif %}"
+                       href="{% url 'news' %}">
+                        <i class="fas fa-newspaper me-1 d-md-none"></i> {% trans "Yangiliklar" %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}"
+                       href="{% url 'contact' %}">
+                        <i class="fas fa-phone me-1 d-md-none"></i> {% trans "Aloqa" %}
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Right Side -->
+            <div class="dropdown mt-2">
+    <button class="btn btn-light border-0 shadow-sm rounded-pill px-3 py-1 dropdown-toggle d-flex align-items-center"
+            type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        {% if request.LANGUAGE_CODE == 'uz' %}
+            🇺🇿 <span class="d-none d-sm-inline ms-1">O‘zbekcha</span>
+        {% elif request.LANGUAGE_CODE == 'ru' %}
+            🇷🇺 <span class="d-none d-sm-inline ms-1">Русский</span>
+        {% endif %}
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+        <li>
+            <form action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <input type="hidden" name="language" value="uz">
+                <button type="submit" class="dropdown-item">🇺🇿 O‘zbekcha</button>
+            </form>
+        </li>
+        <li>
+            <form action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <input type="hidden" name="language" value="ru">
+                <button type="submit" class="dropdown-item">🇷🇺 Русский</button>
+            </form>
+        </li>
+    </ul>
+</div>
+
+
+        </div>
+    </div>
+</nav>

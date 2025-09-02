@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block title %}{{ news.title }} - {{ site_config.site_name }}{% endblock %}
+{% block og_title %}{{ news.title }} - {{ site_config.site_name }}{% endblock %}
+{% block og_description %}{{ news.excerpt }}{% endblock %}
+
+{% block og_image %}
+    {% if news.image %}
+        {{ news.image.url }}
+    {% else %}
+        {% static 'images/og-image.jpg' %}
+    {% endif %}
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/news.css' %}">
+<!-- Animate.css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<!-- AOS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
+<style>
+    .news-card .card {
+        transition: all 0.3s ease;
+    }
+    .news-card .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    }
+    .related-news .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .related-news .card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    .hero-visual {
+        max-height: 400px;
+        object-fit: contain;
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<!-- AOS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 1000,
+        once: true
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section hero-split position-relative overflow-hidden">
+    <div class="hero-bubbles" aria-hidden="true">
+        <span class="bubble b1"></span>
+        <span class="bubble b2"></span>
+        <span class="bubble b3"></span>
+        <span class="bubble b4"></span>
+        <span class="bubble b5"></span>
+        <span class="bubble b6"></span>
+        <span class="bubble b7"></span>
+        <span class="bubble b8"></span>
+    </div>
+    <div class="container position-relative">
+        <div class="hero-inner row align-items-center">
+            <!-- Left -->
+            <div class="col-lg-6 hero-copy text-white animate__animated animate__fadeInLeft">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Bosh sahifa" %}</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'news' %}">{% trans "Yangiliklar" %}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ news.title|truncatewords:5 }}</li>
+                    </ol>
+                </nav>
+                <h1 class="fw-bold display-5">{{ news.title }}</h1>
+                <p class="lead text-light">{{ news.excerpt }}</p>
+            </div>
+            <!-- Right -->
+            <div class="col-lg-6 hero-media animate__animated animate__fadeInRight">
+                <div class="hero-figure text-center">
+                    <img class="hero-visual"
+                         src="{% static 'images/news_details_2.png' %}"
+                         alt="{% trans 'Suv mahsuloti' %}"
+                         loading="eager"/>
+                    <span class="glow g1"></span>
+                    <span class="glow g2"></span>
+                    <span class="glow g3"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Waves -->
+    <div class="hero-waves" aria-hidden="true">
+        <svg viewBox="0 0 120 28" preserveAspectRatio="none">
+            <defs>
+                <path id="wavePath" d="M0,16 C30,32 70,0 120,16 L120,32 L0,32 Z"/>
+            </defs>
+            <use href="#wavePath" class="wave wave1"/>
+            <use href="#wavePath" class="wave wave2"/>
+            <use href="#wavePath" class="wave wave3"/>
+        </svg>
+    </div>
+</section>
+
+<!-- News Detail -->
+<section class="news-detail py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="news-card mb-4" data-aos="fade-up">
+                    <div class="card border-0 shadow-sm">
+                        {% if news.image %}
+                            <img src="{{ news.image.url }}" class="card-img-top" alt="{{ news.title }}" style="height: 400px; object-fit: cover;">
+                        {% endif %}
+                        <div class="card-body">
+                            {% if news.is_discount %}
+                                <span class="badge bg-danger mb-3 animate__animated animate__pulse animate__infinite">Aksiya</span>
+                            {% endif %}
+                            <h2 class="card-title fw-bold mb-3">{{ news.title }}</h2>
+                            <div class="mb-4 text-muted">
+                                <i class="far fa-calendar me-2"></i> {{ news.created_at|date:"d M, Y" }}
+                            </div>
+                            <div class="article-content mb-4">
+                                {{ news.content|safe }}
+                            </div>
+                            {% if news.valid_until %}
+                                <div class="alert alert-info animate__animated animate__fadeInUp">
+                                    <i class="fas fa-clock me-2"></i>
+                                    Aksiya amal qilish muddati: {{ news.valid_until|date:"d M, Y" }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Related News -->
+                {% if related_news %}
+                    <div class="related-news mt-5">
+                        <h3 class="fw-bold mb-4" data-aos="fade-right">{% trans "Boshqa yangiliklar" %}</h3>
+                        <div class="row g-4">
+                            {% for related in related_news %}
+                                <div class="col-md-6" data-aos="zoom-in" data-aos-delay="{{ forloop.counter|add:100 }}">
+                                    <div class="card h-100 shadow-sm">
+                                        {% if related.image %}
+                                            <img src="{{ related.image.url }}" class="card-img-top" alt="{{ related.title }}" style="height: 200px; object-fit: cover;">
+                                        {% endif %}
+                                        <div class="card-body">
+                                            {% if related.is_discount %}
+                                                <span class="badge bg-danger mb-2">Aksiya</span>
+                                            {% endif %}
+                                            <h6 class="card-title fw-bold mb-3">{{ related.title }}</h6>
+                                            <p class="card-text text-muted">{{ related.excerpt|truncatewords:15 }}</p>
+                                            <a href="{% url 'news_detail' related.id %}" class="btn btn-outline-primary btn-sm">
+                                                {% trans "O'qish" %} <i class="fas fa-arrow-right ms-1"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <!-- Back -->
+                <div class="text-center mt-5" data-aos="fade-up">
+                    <a href="{% url 'news' %}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-arrow-left me-2"></i> {% trans "Barcha yangiliklar" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

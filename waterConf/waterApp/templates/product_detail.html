@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ page_title }} - {{ site_config.site_name }}{% endblock %}
+{% block og_title %}{{ page_title }} - {{ site_config.site_name }}{% endblock %}
+{% block og_description %}{{ meta_description }}{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="hero-section py-5 bg-light">
+        <div class="container">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Bosh sahifa</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'products' %}">Mahsulotlar</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Product Detail -->
+    <section class="product-detail py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="product-gallery">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded shadow">
+                        {% else %}
+                            <img src="{% static 'images/default-product.jpg' %}" alt="Mahsulot rasmi" class="img-fluid rounded shadow">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <h2 class="display-6 fw-bold mb-3">{{ product.name }}</h2>
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="badge bg-primary me-2">{{ product.size }}</span>
+                        <span class="text-muted">Suv hajmi</span>
+                    </div>
+                    <div class="price-section mb-4">
+                        {% if product.old_price %}
+                            <span class="old-price text-muted me-2">{{ product.old_price|floatformat:0 }} so'm</span>
+                        {% endif %}
+                        <span class="current-price h4 text-primary fw-bold">{{ product.price|floatformat:0 }} so'm</span>
+                    </div>
+                    <p class="lead mb-4">{{ product.short_description }}</p>
+                    <div class="mb-4">
+                        <h5 class="fw-bold mb-3">Mahsulot haqida</h5>
+                        <p>{{ product.description|safe }}</p>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary btn-lg order-btn"
+                                data-product-id="{{ product.id }}"
+                                data-product-name="{{ product.name }}"
+                                data-product-price="{{ product.price }}">
+                            <i class="fas fa-shopping-cart me-2"></i> Buyurtma berish
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products -->
+    {% if related_products %}
+    <section class="related-products py-5">
+        <div class="container">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h2 class="h4 fw-bold">Sizga yoqishi mumkin</h2>
+                </div>
+            </div>
+            <div class="row g-4">
+                {% for related in related_products %}
+                    <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                        <div class="card product-card h-100 border-0 shadow-sm">
+                            {% if related.get_discount_percent %}
+                                <div class="product-badge">-{{ related.get_discount_percent }}%</div>
+                            {% endif %}
+                            <div class="card-img-wrapper">
+                                {% if related.image %}
+                                    <img src="{{ related.image.url }}" class="card-img-top" alt="{{ related.name }}">
+                                {% else %}
+                                    <img src="{% static 'images/default-product.jpg' %}" class="card-img-top" alt="Mahsulot rasmi">
+                                {% endif %}
+                            </div>
+                            <div class="card-body d-flex flex-column">
+                                <span class="badge bg-primary mb-2 align-self-start">{{ related.size }}</span>
+                                <h6 class="card-title fw-bold mb-2">{{ related.name }}</h6>
+                                <p class="card-text text-muted small flex-grow-1">{{ related.short_description|truncatewords:10 }}</p>
+                                <div class="price-section mb-3">
+                                    {% if related.old_price %}
+                                        <span class="old-price text-muted me-2">{{ related.old_price|floatformat:0 }} so'm</span>
+                                    {% endif %}
+                                    <span class="current-price h6 text-primary fw-bold">{{ related.price|floatformat:0 }} so'm</span>
+                                </div>
+                                <div class="d-grid">
+                                    <button class="btn btn-primary order-btn"
+                                            data-product-id="{{ related.id }}"
+                                            data-product-name="{{ related.name }}"
+                                            data-product-price="{{ related.price }}">
+                                        <i class="fas fa-shopping-cart me-2"></i> Buyurtma berish
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+{% endblock %}

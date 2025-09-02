@@ -1,0 +1,287 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{{ page_title }} - {{ site_config.site_name }}{% endblock %}
+{% block og_title %}{{ page_title }} - {{ site_config.site_name }}{% endblock %}
+{% block og_description %}{{ meta_description }}{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/news.css' %}">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- AOS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css"/>
+{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="hero-section hero-split position-relative overflow-hidden">
+    <div class="hero-bubbles" aria-hidden="true">
+        <span class="bubble b1"></span> <span class="bubble b2"></span> <span class="bubble b3"></span>
+        <span class="bubble b4"></span> <span class="bubble b5"></span> <span class="bubble b6"></span>
+        <span class="bubble b7"></span> <span class="bubble b8"></span>
+    </div>
+    <div class="container position-relative">
+        <div class="hero-inner">
+            <div class="content_flex">
+                <div class="hero-copy text-white animate__animated animate__fadeInLeft">
+                    <h1 class="fw-bold mb-3">{% trans "Biz haqimizda" %}</h1>
+                    <p class="lead mb-4">{% trans "TozaSuv – sog'lom turmush tarzi asosi" %}</p>
+                </div>
+            </div>
+
+            <!-- Right: image area -->
+            <div class="hero-media">
+                <div class="hero-figure animate__animated animate__fadeInRight">
+                    <img
+                        class="hero-visual"
+                        src="{% static 'images/about.png' %}"
+                        alt="{% trans 'Suv mahsuloti' %}"
+                        loading="eager"
+                    />
+                    <span class="glow g1"></span>
+                    <span class="glow g2"></span>
+                    <span class="glow g3"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hero-waves" aria-hidden="true">
+        <svg viewBox="0 0 120 28" preserveAspectRatio="none">
+            <defs>
+                <path id="wavePath" d="M0,16 C30,32 70,0 120,16 L120,32 L0,32 Z"/>
+            </defs>
+            <use href="#wavePath" class="wave wave1"/>
+            <use href="#wavePath" class="wave wave2"/>
+            <use href="#wavePath" class="wave wave3"/>
+        </svg>
+    </div>
+</section>
+
+    <!-- About Section -->
+    {% if about %}
+    <section class="about-section py-5">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6" data-aos="fade-right">
+                    {% if about.image %}
+                        <img src="{{ about.image.url }}" alt="{{ about.title }}" class="img-fluid rounded shadow">
+                    {% else %}
+                        <img src="{% static 'images/about-default.jpg' %}" alt="{% trans 'Biz haqimizda' %}" class="img-fluid rounded shadow">
+                    {% endif %}
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <h2 class="display-6 fw-bold mb-4">{{ about.title }}</h2>
+                    <p class="lead mb-4">{{ about.content|safe }}</p>
+                    <div class="row g-3 mt-4">
+                        <div class="col-md-6 animate__animated animate__fadeInUp animate__delay-1s">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3 fa-lg"></i>
+                                <span>{% trans "ISO sertifikatli" %}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 animate__animated animate__fadeInUp animate__delay-2s">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3 fa-lg"></i>
+                                <span>{% trans "100% tabiy suv" %}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 animate__animated animate__fadeInUp animate__delay-3s">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3 fa-lg"></i>
+                                <span>{% trans "Laboratoriya nazorati" %}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 animate__animated animate__fadeInUp animate__delay-4s">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-check-circle text-success me-3 fa-lg"></i>
+                                <span>{% trans "Bepul yetkazib berish" %}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Mission & Vision -->
+    {% if about.mission or about.vision %}
+    <section class="mission-vision py-5 bg-light">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12" data-aos="fade-up">
+                    <h2 class="display-6 fw-bold mb-3">{% trans "Bizning maqsadimiz va istiqbolimiz" %}</h2>
+                    <p class="text-muted">{% trans "TozaSuv bilan kelajakda nima qilmoqchi ekanmiz" %}</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="card h-100 p-4 border-0 shadow-sm animate__animated animate__fadeInUp">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold mb-3">{% trans "Maqsad" %}</h5>
+                            <p class="card-text">{{ about.mission }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="card h-100 p-4 border-0 shadow-sm animate__animated animate__fadeInUp animate__delay-1s">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold mb-3">{% trans "Istiqbol" %}</h5>
+                            <p class="card-text">{{ about.vision }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Features Section -->
+    <section class="features-section py-5">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12" data-aos="fade-up">
+                    <h2 class="display-6 fw-bold mb-3">{% trans "Bizning afzalliklarimiz" %}</h2>
+                    <p class="text-muted">{% trans "Sifat, tezlik va ishonchlilik" %}</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="flip-left" data-aos-delay="100">
+                    <div class="feature-card text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-award fa-3x text-primary"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">{% trans "Sifat kafolati" %}</h5>
+                        <p class="text-muted">{% trans "7 bosqichli tozalash tizimi va xalqaro sertifikatlar" %}</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="flip-left" data-aos-delay="200">
+                    <div class="feature-card text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-shipping-fast fa-3x text-primary"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">{% trans "Tez yetkazish" %}</h5>
+                        <p class="text-muted">{% trans "Toshkent bo'ylab 2-4 soat ichida bepul yetkazib berish" %}</p>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="flip-left" data-aos-delay="300">
+                    <div class="feature-card text-center p-4">
+                        <div class="feature-icon mb-3">
+                            <i class="fas fa-leaf fa-3x text-primary"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">{% trans "Ekologik toza" %}</h5>
+                        <p class="text-muted">{% trans "100% qayta ishlanuvchi qadoqlash materiallari" %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    {% if testimonials %}
+    <section class="testimonials-section py-5 bg-light">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12" data-aos="fade-up">
+                    <h2 class="display-6 fw-bold mb-3">{% trans "Mijozlarimiz fikri" %}</h2>
+                    <p class="text-muted">{% trans "Bizni tanlaganlar nima deydi" %}</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                {% for testimonial in testimonials %}
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ forloop.counter|add:100 }}">
+                    <div class="card card-water h-100 animate__animated animate__zoomIn">
+                        <div class="card-body text-center">
+                            <div class="mb-3">
+                                {% if testimonial.avatar %}
+                                    <img src="{{ testimonial.avatar.url }}" alt="{{ testimonial.full_name }}" class="rounded-circle" width="60" height="60">
+                                {% else %}
+                                    <div class="bg-primary rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                        <i class="fas fa-user text-white fa-lg"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="stars mb-3">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= testimonial.rating %}
+                                        <i class="fas fa-star text-warning"></i>
+                                    {% else %}
+                                        <i class="far fa-star text-muted"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <p class="card-text mb-3">"{{ testimonial.message|truncatewords:20 }}"</p>
+                            <h6 class="fw-bold mb-1">{{ testimonial.full_name }}</h6>
+                            {% if testimonial.position %}
+                                <small class="text-muted">{{ testimonial.position }}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+<!--            <div class="text-center mt-5" data-aos="fade-up">-->
+<!--                <a href="{% url 'testimonials' %}" class="btn btn-outline-primary animate__animated animate__fadeInUp">-->
+<!--                    {% trans "Barcha sharhlarni ko'rish" %} <i class="fas fa-arrow-right ms-2"></i>-->
+<!--                </a>-->
+<!--            </div>-->
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Partners Section -->
+    {% if partners %}
+    <section class="partners-section py-5">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12" data-aos="fade-up">
+                    <h2 class="display-6 fw-bold mb-3">{% trans "Bizning hamkorlarimiz" %}</h2>
+                    <p class="lead text-muted">{% trans "Ishonchli brendlar biz bilan hamkorlik qiladi" %}</p>
+                </div>
+            </div>
+            <div class="row align-items-center justify-content-center g-4">
+                {% for partner in partners %}
+                <div class="col-lg-2 col-md-3 col-4" data-aos="zoom-in" data-aos-delay="{{ forloop.counter|add:50 }}">
+                    <div class="partner-logo text-center animate__animated animate__pulse">
+                        {% if partner.logo %}
+                            <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="img-fluid grayscale hover-color" style="max-height: 60px;">
+                        {% else %}
+                            <div class="bg-light p-3 rounded">{{ partner.name }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- CTA Section -->
+    <section class="py-5 bg-primary text-white text-center">
+        <div class="container animate__animated animate__fadeInUp">
+            <h2 class="display-6 fw-bold mb-3">{% trans "TozaSuv bilan tanishing!" %}</h2>
+            <p class="mb-4">{% trans "Sog'lom turmush tarzi TozaSuv bilan boshlanadi. Hoziroq buyurtma bering va toza suvning ta'mini his eting." %}</p>
+            <div class="d-flex flex-wrap justify-content-center gap-3">
+                <button class="btn btn-light btn-lg" data-bs-toggle="modal" data-bs-target="#orderModal">
+                    <i class="fas fa-shopping-cart me-2"></i> {% trans "Buyurtma berish" %}
+                </button>
+                <a href="{% url 'contact' %}" class="btn btn-outline-light btn-lg">
+                    <i class="fas fa-phone me-2"></i> {% trans "Bog'lanish" %}
+                </a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_js %}
+    <!-- AOS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+        });
+    </script>
+{% endblock %}
